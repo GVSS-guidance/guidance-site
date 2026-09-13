@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guidance Department | Georges Vanier Secondary School</title>
+<style>
+  :root{
+    --maroon:#6b1f2a;
+    --maroon-dark:#4e161e;
+    --maroon-light:#8a2c3a;
+    --gold:#c8a24a;
+    --gold-light:#e3c87f;
+    --cream:#fbf7ef;
+    --ink:#2a2326;
+    --muted:#6f6168;
+    --white:#ffffff;
+    --shadow:0 6px 22px rgba(78,22,30,.12);
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Segoe UI',Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.65;
+  }
+  a{color:var(--maroon);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  img{max-width:100%;display:block;}
+  .container{max-width:1100px;margin:0 auto;padding:0 22px;}
+
+  /* ---------- Header / Nav ---------- */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:var(--maroon);
+    box-shadow:var(--shadow);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 22px;max-width:1100px;margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:12px;color:var(--white);}
+  .brand .crest{
+    width:42px;height:42px;border-radius:50%;
+    background:var(--gold);color:var(--maroon-dark);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:1.1rem;flex-shrink:0;
+  }
+  .brand .logo{height:46px;width:auto;display:block;background:#fff;border-radius:10px;padding:4px;flex-shrink:0;}
+  .brand b,.brand strong{font-size:1.05rem;line-height:1.2;display:block;}
+  .brand span{font-size:.78rem;color:var(--gold-light);letter-spacing:.5px;}
+  .nav-links{display:flex;gap:6px;list-style:none;flex-wrap:wrap;}
+  .nav-links a{
+    color:var(--white);font-size:.92rem;font-weight:500;
+    padding:8px 12px;border-radius:8px;transition:background .2s;
+  }
+  .nav-links a:hover{background:var(--maroon-light);text-decoration:none;}
+  .menu-toggle{display:none;background:none;border:none;color:var(--white);
+    font-size:1.6rem;cursor:pointer;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:linear-gradient(135deg,var(--maroon) 0%,var(--maroon-dark) 100%);
+    color:var(--white);padding:74px 0 84px;position:relative;overflow:hidden;text-align:center;
+  }
+  .hero::after{
+    content:"";position:absolute;right:-80px;bottom:-80px;
+    width:320px;height:320px;border-radius:50%;
+    background:radial-gradient(circle,rgba(200,162,74,.28),transparent 70%);
+  }
+  .hero h1{font-size:2.6rem;line-height:1.15;margin:0 auto 14px;max-width:760px;color:var(--white);font-weight:800;}
+  .hero h1 em{color:var(--gold-light);font-style:normal;}
+  .hero p{font-size:1.15rem;max-width:620px;color:#f3e9da;margin:0 auto 28px;}
+  .btn-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:center;}
+  .btn{
+    display:inline-block;padding:13px 26px;border-radius:30px;
+    font-weight:600;font-size:.98rem;transition:transform .15s,box-shadow .2s;
+  }
+  .btn-gold{background:var(--gold);color:var(--maroon-dark);}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25);text-decoration:none;}
+  .btn-outline{border:2px solid var(--gold-light);color:var(--white);}
+  .btn-outline:hover{background:rgba(255,255,255,.1);text-decoration:none;}
+
+  /* ---------- Sections ---------- */
+  section{padding:64px 0;}
+  .section-head{text-align:center;max-width:680px;margin:0 auto 44px;}
+  .eyebrow{
+    color:var(--gold);font-weight:700;letter-spacing:1.5px;
+    text-transform:uppercase;font-size:.82rem;
+  }
+  .section-head h2{
+    font-size:2rem;color:var(--maroon);margin:8px 0 12px;font-weight:700;
+  }
+  .section-head p{color:var(--muted);font-size:1.05rem;}
+  .alt{background:var(--white);}
+
+  /* ---------- Counsellor cards ---------- */
+  .grid{display:grid;gap:24px;}
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+  .card{
+    background:var(--white);border-radius:var(--radius);
+    box-shadow:var(--shadow);overflow:hidden;
+    border:1px solid #efe6d8;transition:transform .18s,box-shadow .2s;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(78,22,30,.18);}
+  .counsellor .photo{
+    height:150px;background:linear-gradient(135deg,var(--maroon-light),var(--maroon));
+    display:flex;align-items:center;justify-content:center;
+    color:var(--gold-light);font-size:2.6rem;font-weight:800;
+  }
+  .counsellor .body{padding:20px;}
+  .counsellor h3{color:var(--maroon);font-size:1.2rem;margin-bottom:2px;font-weight:700;}
+  .counsellor .role{color:var(--gold);font-weight:600;font-size:.86rem;
+    text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
+  .counsellor .meta{font-size:.92rem;color:var(--muted);margin-bottom:6px;}
+  .counsellor .meta b,.counsellor .meta strong{color:var(--ink);}
+
+  /* ---------- Resource cards (academic/postsec/wellness) ---------- */
+  .res{padding:26px;background:var(--white);border-radius:var(--radius);
+    box-shadow:var(--shadow);border:1px solid #efe6d8;border-top:4px solid var(--gold);}
+  .res h3{color:var(--maroon);font-size:1.2rem;margin-bottom:10px;
+    display:flex;align-items:center;gap:10px;font-weight:700;}
+  .res .ico{
+    width:34px;height:34px;border-radius:8px;background:var(--cream);
+    display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;
+  }
+  .res ul{list-style:none;margin-top:6px;}
+  .res li{padding:7px 0 7px 22px;position:relative;font-size:.96rem;border-bottom:1px solid #f3ece0;}
+  .res li:last-child{border-bottom:none;}
+  .res li::before{content:"▸";position:absolute;left:0;color:var(--gold);font-weight:700;}
+  .res li ul{list-style:none;margin:4px 0 2px;padding:0;}
+  .res li li{border-bottom:none;padding:5px 0 2px 22px;font-size:.9rem;}
+  .res li li::before{content:"↳";font-weight:400;}
+
+  /* ---------- Expandable bullets (native <details>, no JS needed) ---------- */
+  .res summary{cursor:pointer;color:var(--maroon);font-weight:600;list-style:none;display:inline-block;}
+  .res summary::-webkit-details-marker{display:none;}
+  .res summary::after{content:"+";display:inline-block;margin-left:8px;color:var(--gold);font-weight:700;}
+  .res details[open] summary::after{content:"−";}
+  .res summary:hover{text-decoration:underline;}
+  .exp-body{margin-top:8px;padding:12px 14px;background:var(--cream);border-radius:10px;border:1px solid #efe6d8;}
+  .exp-note{font-size:.85rem;color:var(--muted);margin:0 0 8px;}
+  .res .dates{list-style:none;margin:0;padding:0;}
+  .res .dates li{border-bottom:1px solid #efe6d8;padding:6px 0;font-size:.88rem;}
+  .res .dates li:last-child{border-bottom:none;}
+  .res .dates li::before{content:none;}
+  .dates b,.dates strong{color:var(--maroon);}
+  .exp-link{margin:8px 0 0;font-size:.9rem;}
+
+  /* ---------- Wellness / crisis banner ---------- */
+  .crisis{
+    background:linear-gradient(135deg,var(--maroon-dark),var(--maroon));
+    color:var(--white);border-radius:var(--radius);padding:30px;
+    margin-top:30px;text-align:center;
+  }
+  .crisis h3{color:var(--gold-light);font-size:1.3rem;margin-bottom:8px;font-weight:700;}
+  .crisis p{color:#f3e9da;max-width:640px;margin:0 auto 14px;}
+  .crisis .lines{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .crisis .line{
+    background:rgba(255,255,255,.1);border:1px solid var(--gold-light);
+    border-radius:10px;padding:12px 18px;font-size:.95rem;
+  }
+  .crisis .line b,.crisis .line strong{color:var(--gold-light);display:block;font-size:1.1rem;}
+
+  /* ---------- Contact ---------- */
+  .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;}
+  .info-line{display:flex;gap:12px;margin-bottom:16px;}
+  .info-line .ico{font-size:1.3rem;color:var(--gold);}
+  .info-line b,.info-line strong{color:var(--maroon);display:block;}
+  .hours{background:var(--white);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);border:1px solid #efe6d8;}
+  .hours table{width:100%;border-collapse:collapse;}
+  .hours td{padding:8px 0;border-bottom:1px solid #f3ece0;font-size:.95rem;}
+  .hours td:last-child{text-align:right;color:var(--muted);}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--maroon-dark);color:#e8d9c4;padding:34px 0;text-align:center;}
+  footer .crest-sm{
+    width:38px;height:38px;border-radius:50%;background:var(--gold);
+    color:var(--maroon-dark);display:flex;align-items:center;justify-content:center;
+    font-weight:800;margin:0 auto 12px;
+  }
+  footer a{color:var(--gold-light);}
+  footer .small{font-size:.82rem;color:#b89a86;margin-top:10px;}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:860px){
+    .grid-3{grid-template-columns:repeat(2,1fr);}
+    .contact-wrap{grid-template-columns:1fr;}
+    .hero h1{font-size:2.1rem;}
+  }
+  @media(max-width:600px){
+    .grid-3,.grid-2{grid-template-columns:1fr;}
+    .menu-toggle{display:block;}
+    .nav-links{
+      display:none;width:100%;flex-direction:column;gap:2px;
+      padding:10px 0 4px;
+    }
+    .nav-links.open{display:flex;}
+    .nav{flex-wrap:wrap;}
+    .hero{padding:54px 0 60px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER / NAV ============ -->
+<header>
+  <nav class="nav">
+    <div class="brand">
+      <div>
+        <b>Georges Vanier Secondary School</b>
+        <span>GUIDANCE &amp; COUNSELLING</span>
+      </div>
+    </div>
+    <button class="menu-toggle" aria-label="Menu" onclick="document.getElementById('navlinks').classList.toggle('open')">&#9776;</button>
+    <ul class="nav-links" id="navlinks">
+      <li><a href="#counsellors">Our Counsellors</a></li>
+      <li><a href="#academic">Academic Planning</a></li>
+      <li><a href="#postsec">Post-Secondary</a></li>
+      <li><a href="#wellness">Wellness</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" style="padding-top:74px;">
+  <div class="container">
+    <h1>Here to help you <em>plan, grow, and thrive.</em></h1>
+    <p>Georges Vanier's strength is our diverse community. Our Guidance team is dedicated to being your pillar of support. We collaborate closely with families to open doors to new opportunities, connect students with vital resources, and confidently guide them toward their post-secondary success.</p>
+    <div class="btn-row">
+      <a href="#counsellors" class="btn btn-gold">Meet Your Counsellor</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COUNSELLOR DIRECTORY ============ -->
+<section id="counsellors">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Our Team</div>
+      <h2>Meet Your Counsellors</h2>
+    </div>
+    <div class="grid grid-3">
+
+      <div class="card counsellor">
+        <div class="photo">L.C.</div>
+        <div class="body">
+          <h3>Loraine Chichester</h3>
+          <div class="role">School Counsellor</div>
+          <div class="meta"><b>Students:</b> Last names A–F, W–Z</div>
+          <div class="meta"><b>Email:</b><br><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=loraine.chichester@tdsb.on.ca" target="_blank" rel="noopener">loraine.chichester@tdsb.on.ca</a></div>
+          <div class="meta"><b>Extension:</b> 20045</div>
+        </div>
+      </div>
+
+      <div class="card counsellor">
+        <div class="photo">M.L.</div>
+        <div class="body">
+          <h3>Margarita Leventis</h3>
+          <div class="role">School Counsellor</div>
+          <div class="meta"><b>Students:</b> Last names G–O</div>
+          <div class="meta"><b>Email:</b><br><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=margarita.leventis@tdsb.on.ca" target="_blank" rel="noopener">margarita.leventis@tdsb.on.ca</a></div>
+          <div class="meta"><b>Extension:</b> 20043</div>
+        </div>
+      </div>
+
+      <div class="card counsellor">
+        <div class="photo">S.D.</div>
+        <div class="body">
+          <h3>Shafin Devji</h3>
+          <div class="role">Department ACL</div>
+          <div class="meta"><b>Students:</b> Last names P–V</div>
+          <div class="meta"><b>Email:</b><br><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=shafin.devji@tdsb.on.ca" target="_blank" rel="noopener">shafin.devji@tdsb.on.ca</a></div>
+          <div class="meta"><b>Extension:</b> 20042</div>
+        </div>
+      </div>
+
+      <div class="card counsellor">
+        <div class="photo">C.G.</div>
+        <div class="body">
+          <h3>Christine Gillespie</h3>
+          <div class="role">School Counsellor</div>
+          <div class="meta"><b>Students:</b> International students</div>
+          <div class="meta"><b>Email:</b><br><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=christine.gillespie@tdsb.on.ca" target="_blank" rel="noopener">christine.gillespie@tdsb.on.ca</a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACADEMIC PLANNING ============ -->
+<section id="academic" class="alt">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Stay On Track</div>
+      <h2>Academic Planning</h2>
+      <p>Everything you need to choose courses, meet graduation requirements, and stay on path toward your goals.</p>
+    </div>
+    <div class="grid grid-2">
+
+      <div class="res">
+        <h3><span class="ico">📘</span> Course Selection</h3>
+        <ul>
+          <li><a href="https://app.myblueprint.ca/?sdid=tdsb" target="_blank" rel="noopener">myBlueprint – course selection</a></li>
+          <li><a href="https://docs.google.com/presentation/d/1l_kHYq9Mh9Vtnt_yFJ9aOelvQdawLZtx3vaahkuXkX8/edit" target="_blank" rel="noopener">Latest course chart (2025–2026)</a></li>
+          <li>Questions? Contact your counsellor above</li>
+        </ul>
+      </div>
+
+      <div class="res">
+        <h3><span class="ico">🎓</span> Graduation Requirements</h3>
+        <ul>
+          <li><a href="https://www.tdsb.on.ca/High-School/GradesExamsDiplomas/Getting-your-Diploma" target="_blank" rel="noopener">OSSD requirements</a></li>
+          <li><a href="https://www.tdsb.on.ca/High-School/GradesExamsDiplomas/Getting-your-Diploma/Online-Learning-Requirement" target="_blank" rel="noopener">Online learning requirement</a>
+            <ul>
+              <li><a href="https://www.tdsb.on.ca/Portals/0/HighSchool/docs/TDSB_Opt_Out_Form-Online_Grad_Requirement_2023.pdf" target="_blank" rel="noopener">Opt-out form (PDF)</a></li>
+            </ul>
+          </li>
+          <li>
+            <details>
+              <summary>Community involvement hours</summary>
+              <div class="exp-body">
+                <p class="exp-note">Every Ontario student needs a minimum of <b>40 hours</b> of community involvement to graduate. Volunteer beyond that and you can earn the <b>Minister's Certificate of Recognition for Community Involvement</b>, awarded at graduation:</p>
+                <ul class="dates">
+                  <li><b>Bronze</b> — 50–99 volunteer hours</li>
+                  <li><b>Silver</b> — 100–199 volunteer hours</li>
+                  <li><b>Gold</b> — 200+ volunteer hours</li>
+                </ul>
+                <p class="exp-note">The certificate can help you stand out when applying for jobs, college or university programs, apprenticeships, and scholarships.</p>
+                <p class="exp-link"><a href="https://www.tdsb.on.ca/Portals/0/HighSchool/docs/CommunityInvolvementGettingStartedGuide.pdf" target="_blank" rel="noopener">Getting started guide (PDF)</a> &nbsp;&bull;&nbsp; <a href="https://www.tdsb.on.ca/Portals/0/HighSchool/docs/TDSB-Community-Involvement-Form.pdf" target="_blank" rel="noopener">Hours tracking form (PDF)</a> &nbsp;&bull;&nbsp; <a href="https://www.ontario.ca/page/get-your-high-school-volunteer-hours" target="_blank" rel="noopener">Volunteer hours &amp; recognition (ontario.ca)</a></p>
+              </div>
+            </details>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ POST-SECONDARY ============ -->
+<section id="postsec">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Life After Georges Vanier Secondary School</div>
+      <h2>Post-Secondary: University, College &amp; Work</h2>
+      <p>Whatever your path — a four-year degree, college, a trade, or straight into the workforce — these resources will help you get there.</p>
+    </div>
+    <div class="grid grid-3">
+
+      <div class="res">
+        <h3><span class="ico">🏛️</span> University &amp; College</h3>
+        <ul>
+          <li>
+            <details>
+              <summary>Applying to Ontario Universities (OUAC)?</summary>
+              <div class="exp-body">
+                <p class="exp-note">Key dates for current Ontario high school students applying through the OUAC for Fall 2027 admission (2026–27 cycle).</p>
+                <ul class="dates">
+                  <li><b>Aug. 2026</b> — Application material for Fall 2027 admission is posted on OUInfo</li>
+                  <li><b>Sept. 26–27, 2026</b> — <a href="https://www.ouevents.ca/ouf/" target="_blank" rel="noopener">Ontario Universities' Fair</a> at the Metro Toronto Convention Centre (South Building); regional fairs &amp; info sessions run through the fall</li>
+                  <li><b>Jan. 15, 2027</b> — Deadline to submit your OUAC application (late applications are still processed, but individual university deadlines apply)</li>
+                  <li><b>May 28, 2027</b> — Latest date to expect a response (offer, refusal, or deferral) from Ontario universities if you applied by Jan. 15</li>
+                  <li><b>June 1, 2027</b> — Earliest date a university may require you to accept an offer and make a financial commitment</li>
+                  <li><b>Early June 2027</b> — Admission Information Service opens — search for programs that still have space</li>
+                </ul>
+                <p class="exp-link"><a href="https://www.ouac.on.ca/guide/undergrad-dates/" target="_blank" rel="noopener">Full list of OUAC key dates →</a></p>
+              </div>
+            </details>
+          </li>
+          <li><a href="https://www.ouinfo.ca/universities/events" target="_blank" rel="noopener">University campus tours &amp; events (OUInfo)</a></li>
+          <li>
+            <details>
+              <summary>Applying to Ontario Colleges?</summary>
+              <div class="exp-body">
+                <p class="exp-note">Applications to all of Ontario's public colleges go through one central service: ontariocolleges.ca. These dates repeat every application cycle.</p>
+                <ul class="dates">
+                  <li><b>Late Sept.–early Oct.</b> — online application opens for programs starting the following fall</li>
+                  <li><b>Nov. 1</b> — earliest date colleges may send offers of admission</li>
+                  <li><b>Feb. 1</b> — equal consideration date: apply by this date for highly competitive programs (after it, spots go first-come, first-served)</li>
+                  <li><b>May 1</b> — deadline to confirm your offer of admission</li>
+                  <li><b>June</b> — tuition deposit due at your college to secure your spot</li>
+                </ul>
+                <p class="exp-link"><a href="https://www.ontariocolleges.ca/en" target="_blank" rel="noopener">Go to ontariocolleges.ca →</a></p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>When are marks sent to OCAS &amp; OUAC?</summary>
+              <div class="exp-body">
+                <p class="exp-note">TDSB automatically sends your courses and marks to OCAS (colleges) and OUAC (universities) at set points in the application cycle — you don't need to send transcripts yourself. Key dates for the 2026–27 cycle:</p>
+                <ul class="dates">
+                  <li><b>Fall 2026</b> — current courses &amp; Semester 1 midterm marks (OCAS: Oct. 9 &amp; Nov. 13; OUAC: Nov. 5 &amp; Nov. 19)</li>
+                  <li><b>Feb. 11, 2027</b> — Semester 1 final marks (OCAS &amp; OUAC)</li>
+                  <li><b>Apr. 23, 2027</b> — Semester 2 midterm marks (OCAS &amp; OUAC)</li>
+                  <li><b>Early July 2027</b> — Semester 2 final marks &amp; proof of graduation (OCAS: July 2; OUAC: July 8)</li>
+                  <li><b>Aug. 5, 2027</b> — any remaining final marks</li>
+                  <li><b>Aug. 31, 2027</b> — summer school marks</li>
+                </ul>
+                <p class="exp-note">Marks must be finalized at the school before each date — if a mark looks wrong or is missing, see your counsellor right away.</p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Applying to US Colleges?</summary>
+              <div class="exp-body">
+                <p class="exp-note">Most US colleges accept the Common Application. Deadlines vary by college — always confirm on each college's admissions page. US applications usually involve essays, teacher recommendations, and sometimes SAT/ACT scores, so start early and see your counsellor.</p>
+                <ul class="dates">
+                  <li><b>Aug. 1</b> — Common App opens for the new application cycle each year</li>
+                  <li><b>Nov. 1 or Nov. 15</b> — typical Early Decision / Early Action deadlines</li>
+                  <li><b>Jan. 1–15</b> — typical Regular Decision deadlines</li>
+                </ul>
+                <p class="exp-link"><a href="https://www.commonapp.org/" target="_blank" rel="noopener">Go to the Common Application →</a></p>
+              </div>
+            </details>
+          </li>
+        </ul>
+      </div>
+
+      <div class="res">
+        <h3><span class="ico">💰</span> Financial Aid &amp; Scholarships</h3>
+        <ul>
+          <li>
+            <details>
+              <summary>OSAP – Ontario Student Assistance Program</summary>
+              <div class="exp-body">
+                <p class="exp-note">Ontario's provincial program of loans and grants for college and university students.</p>
+                <ul class="dates">
+                  <li><a href="https://www.ontario.ca/page/learn-about-osap" target="_blank" rel="noopener">Learn about OSAP</a></li>
+                  <li><a href="https://www.ontario.ca/page/how-apply-osap" target="_blank" rel="noopener">How to Apply</a></li>
+                  <li><a href="https://osap.gov.on.ca/AidEstimator2627Web/enterapp/enter.xhtml" target="_blank" rel="noopener">OSAP Aid Estimator</a></li>
+                </ul>
+                <p class="exp-link"><a href="https://www.ontario.ca/page/osap-ontario-student-assistance-program" target="_blank" rel="noopener">Go to the OSAP homepage →</a></p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Ontario Learn and Stay Grant</summary>
+              <div class="exp-body">
+                <p class="exp-note">Full, upfront funding for tuition, books, and other direct educational costs if you enrol in an eligible health-care program in a priority community — college pathways (practical nursing, paramedic, medical laboratory technology) and university pathways (nursing degrees) both qualify. In return, you commit to working in the region where you studied after graduation. Applications go through OSAP.</p>
+                <p class="exp-link"><a href="https://www.ontario.ca/page/ontario-learn-and-stay-grant" target="_blank" rel="noopener">Learn about the Learn and Stay Grant →</a></p>
+              </div>
+            </details>
+          </li>
+          <li><a href="https://www.scholarshipscanada.com/" target="_blank" rel="noopener">ScholarshipsCanada – scholarship search</a></li>
+          <li><a href="https://studentawards.com/" target="_blank" rel="noopener">StudentAwards – scholarships &amp; bursaries</a></li>
+          <li>Deadlines: [add key dates]</li>
+        </ul>
+      </div>
+
+      <div class="res">
+        <h3><span class="ico">🛠️</span> Career &amp; Workforce</h3>
+        <ul>
+          <li><a href="https://www.skilledtradesontario.ca/" target="_blank" rel="noopener">Trades &amp; apprenticeships – Skilled Trades Ontario</a></li>
+          <li><a href="https://app.myblueprint.ca/?sdid=tdsb" target="_blank" rel="noopener">Resume &amp; interview resources – myBlueprint</a> — find them in the "Work" section</li>
+          <li><a href="https://app.myblueprint.ca/?sdid=tdsb" target="_blank" rel="noopener">Career exploration – myBlueprint</a> — explore the "Who Am I" section for career suggestions</li>
+          <li><a href="https://www.jobbank.gc.ca/" target="_blank" rel="noopener">Job search – Job Bank (Government of Canada)</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ WELLNESS / MENTAL HEALTH ============ -->
+<section id="wellness" class="alt">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">You Matter</div>
+      <h2>Mental Health &amp; Wellness</h2>
+      <p>Your well-being comes first. Whether you need someone to talk to or you're supporting a friend, help is always available.</p>
+    </div>
+    <div class="grid grid-2">
+
+      <div class="res">
+        <h3><span class="ico">💬</span> Talk to Someone</h3>
+        <ul>
+          <li>Drop-in hours: Mon.–Fri., 8:45 a.m.–3:30 p.m. — stop by the guidance office, no appointment needed</li>
+          <li>Prefer to write? <a href="#counsellors">Find your counsellor</a> and reach out by email</li>
+          <li>School social worker and child &amp; youth worker support are available — ask your counsellor to connect you</li>
+          <li>Worried about a friend? <a href="https://docs.google.com/forms/d/e/1FAIpQLSdCb5_55H2hOCYBUt5MXgM0VB5FH8wNHYCktK2VMopBMch49Q/viewform?usp=dialog" target="_blank" rel="noopener">Refer a friend</a></li>
+        </ul>
+      </div>
+
+      <div class="res">
+        <h3><span class="ico">🌱</span> Wellness Resources</h3>
+        <ul>
+          <li><a href="#">Stress &amp; time management tips [link]</a></li>
+          <li>
+            <details>
+              <summary>Community mental health services</summary>
+              <div class="exp-body">
+                <p class="exp-note">Free, confidential supports outside of school — many offer phone, text, or chat.</p>
+                <ul class="dates">
+                  <li><a href="https://www.naseeha.org/" target="_blank" rel="noopener">Naseeha Mental Health</a> — culturally sensitive support helpline</li>
+                  <li><a href="https://blackyouth.ca/" target="_blank" rel="noopener">Black Youth Helpline</a> — multicultural helpline for youth and families</li>
+                  <li><a href="https://www.hopeforwellness.ca/" target="_blank" rel="noopener">Hope for Wellness</a> — 24/7 counselling for Indigenous peoples</li>
+                  <li><a href="https://www.jack.org/youth-hub" target="_blank" rel="noopener">Jack.org Youth Hub</a> — mental health resources by youth, for youth</li>
+                  <li><a href="https://www.whatsupwalkin.ca/" target="_blank" rel="noopener">What's Up Walk-In</a> — free counselling for youth, no appointment needed</li>
+                  <li><a href="https://www.youthline.ca/" target="_blank" rel="noopener">YouthLine</a> — peer support for 2SLGBTQ+ youth</li>
+                  <li><a href="https://hfcare.ca/" target="_blank" rel="noopener">Hong Fook</a> — Asian mental health and well-being</li>
+                </ul>
+              </div>
+            </details>
+          </li>
+          <li><a href="#">Mindfulness &amp; self-care tools [link]</a></li>
+          <li><a href="#">Support groups &amp; clubs [link]</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Crisis banner -->
+    <div class="crisis">
+      <h3>In Crisis? Get Help Now</h3>
+      <p>If you or someone you know is struggling, you are not alone. Reach out immediately — these lines are free, confidential, and available 24/7. <b>If there is an emergency, call your local emergency number.</b></p>
+      <div class="lines">
+        <div class="line"><b>1-800-668-6868</b>Kids Help Phone (call) — or text <b style="display:inline">686868</b></div>
+        <div class="line"><b>9-8-8</b>Suicide Crisis Helpline (call or text 9-8-8)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Get In Touch</div>
+      <h2>Visit the Guidance Office</h2>
+      <p>Have a question? Here's how to reach us.</p>
+    </div>
+    <div>
+      <div class="info-line"><span class="ico">📍</span><div><b>Location</b>Georges Vanier Secondary School<br>3000 Don Mills Road East, Toronto, Ontario, M2J 3B6</div></div>
+      <div class="info-line"><span class="ico">📞</span><div><b>Phone</b>416-395-3250 ext. 20040</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div><b>Georges Vanier Secondary School Guidance Department</b></div>
+    <div style="margin-top:6px;">
+      <a href="#counsellors">Counsellors</a> &nbsp;•&nbsp;
+      <a href="#academic">Academic</a> &nbsp;•&nbsp;
+      <a href="#postsec">Post-Secondary</a> &nbsp;•&nbsp;
+      <a href="#wellness">Wellness</a> &nbsp;•&nbsp;
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="small">© <span id="yr"></span> Georges Vanier Secondary School. All rights reserved. &nbsp;|&nbsp; [Privacy / Accessibility links]</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  // Close mobile menu when a link is tapped
+  document.querySelectorAll('#navlinks a').forEach(function(a){
+    a.addEventListener('click',function(){
+      document.getElementById('navlinks').classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
