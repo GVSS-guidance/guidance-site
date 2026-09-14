@@ -99,6 +99,20 @@
   .section-head p{color:var(--muted);font-size:1.05rem;}
   .alt{background:var(--white);}
 
+  /* ---------- Upcoming events strip ----------
+     Slim row between the hero and the counsellors. All cards visible on wide screens;
+     swipeable (scroll-snap) on narrow ones. Past events are hidden by the script at the
+     bottom of the page (each card's data-date), and the whole strip hides when none remain. */
+  section.events-strip{padding:22px 0 24px;background:var(--white);border-bottom:1px solid #efe6d8;}
+  .events-strip h2{font-size:.82rem;color:var(--gold);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 12px;}
+  .events{display:flex;gap:12px;list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;padding-bottom:6px;-webkit-overflow-scrolling:touch;}
+  .event{flex:1 1 0;min-width:172px;scroll-snap-align:start;display:flex;align-items:center;gap:10px;background:var(--cream);border:1px solid #efe6d8;border-radius:12px;padding:9px 12px 9px 9px;}
+  .event-date{flex-shrink:0;width:48px;border-radius:9px;background:var(--maroon);color:var(--white);text-align:center;line-height:1.1;padding:7px 0 8px;}
+  .event-date span{display:block;font-size:.68rem;font-weight:700;letter-spacing:1px;color:var(--gold-light);}
+  .event-date b,.event-date strong{display:block;font-size:1.35rem;font-weight:800;}
+  .event h3{font-size:.95rem;color:var(--maroon);font-weight:700;line-height:1.25;margin:0;}
+  .event p{font-size:.82rem;color:var(--muted);line-height:1.3;margin:2px 0 0;}
+
   /* ---------- Counsellor cards ---------- */
   .grid{display:grid;gap:24px;}
   .grid-3{grid-template-columns:repeat(3,1fr);}
@@ -237,6 +251,33 @@
     <div class="btn-row">
       <a href="#counsellors" class="btn btn-gold">Meet Your Counsellor</a>
     </div>
+  </div>
+</section>
+
+<!-- ============ UPCOMING EVENTS ============
+     EVENTS: add/remove <li class="event"> items in date order. data-date (YYYY-MM-DD) controls
+     auto-hiding: a card disappears the day after its date, and the strip hides when all are past. -->
+<section class="events-strip" aria-labelledby="events-title">
+  <div class="container">
+    <h2 id="events-title">Upcoming Events</h2>
+    <ul class="events">
+      <li class="event" data-date="2026-09-24">
+        <div class="event-date"><span>SEPT</span><b>24</b></div>
+        <div><h3>Grade 9 Curriculum Night</h3><p>For Grade 9 students &amp; families</p></div>
+      </li>
+      <li class="event" data-date="2026-09-29">
+        <div class="event-date"><span>SEPT</span><b>29</b></div>
+        <div><h3>Club Fair</h3><p>Lunch &middot; Cafeteria</p></div>
+      </li>
+      <li class="event" data-date="2026-10-07">
+        <div class="event-date"><span>OCT</span><b>7</b></div>
+        <div><h3>Camp Robin Hood</h3><p>For Grade 9 students</p></div>
+      </li>
+      <li class="event" data-date="2026-10-08">
+        <div class="event-date"><span>OCT</span><b>8</b></div>
+        <div><h3>Post-Secondary Fair</h3><p>Gym 1</p></div>
+      </li>
+    </ul>
   </div>
 </section>
 
@@ -578,6 +619,16 @@
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
+  // Hide events whose date has passed (visible through the end of the event day); hide the strip if none remain.
+  (function(){
+    var now = new Date(), left = 0;
+    document.querySelectorAll('.event[data-date]').forEach(function(ev){
+      var p = ev.getAttribute('data-date').split('-');
+      var endOfDay = new Date(+p[0], +p[1] - 1, +p[2], 23, 59, 59);
+      if (endOfDay < now) ev.hidden = true; else left++;
+    });
+    if (!left) { var s = document.querySelector('.events-strip'); if (s) s.hidden = true; }
+  })();
   // Close mobile menu when a link is tapped
   document.querySelectorAll('#navlinks a').forEach(function(a){
     a.addEventListener('click',function(){
