@@ -113,6 +113,23 @@
   .event h3{font-size:.95rem;color:var(--maroon);font-weight:700;line-height:1.25;margin:0;}
   .event p{font-size:.82rem;color:var(--muted);line-height:1.3;margin:2px 0 0;}
 
+  /* ---------- Grade 8 callout ----------
+     Sits under the events strip. Unlike an event card this does NOT auto-hide: the open
+     house is over, but the deck stays useful to Grade 8 families through course selection. */
+  section.g8{padding:26px 0;background:var(--cream);border-bottom:1px solid #efe6d8;}
+  .g8-card{display:flex;gap:20px;align-items:center;background:var(--white);border:1px solid #efe6d8;
+    border-left:4px solid var(--gold);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;}
+  .g8-card img{width:230px;flex-shrink:0;border-radius:8px;border:1px solid #efe6d8;}
+  .g8-card .eyebrow{margin-bottom:2px;}
+  .g8-card h2{font-size:1.25rem;color:var(--maroon);font-weight:700;margin:0 0 4px;line-height:1.25;}
+  .g8-card p{font-size:.95rem;color:var(--muted);margin:0 0 12px;}
+  .g8-card .btn{padding:10px 20px;font-size:.92rem;background:var(--maroon);color:var(--white);}
+  .g8-card .btn:hover{background:var(--maroon-light);text-decoration:none;}
+  @media(max-width:600px){
+    .g8-card{flex-direction:column;align-items:flex-start;gap:14px;}
+    .g8-card img{width:100%;}
+  }
+
   /* ---------- Counsellor cards ---------- */
   .grid{display:grid;gap:24px;}
   .grid-3{grid-template-columns:repeat(3,1fr);}
@@ -278,6 +295,27 @@
         <div><h3>Post-Secondary Fair</h3><p>Gym 1</p></div>
       </li>
     </ul>
+  </div>
+</section>
+
+<!-- ============ GRADE 8 OPEN HOUSE ============
+     The open house itself was Nov. 3, 2026 and is past, so this is NOT an events-strip card
+     (those auto-hide). The deck stays up for Grade 8 families through course selection.
+     Slide image is a copy of slide 1 committed to the repo (grade8-open-house.png) rather than
+     hotlinked from Google, so it can't rate-limit or change under us. To refresh it:
+     curl -sL "https://drive.google.com/thumbnail?id=<FILE_ID>&sz=w640" -o grade8-open-house.png
+     Remove this whole section once it is no longer relevant (roughly after Grade 9 selection). -->
+<section class="g8" aria-labelledby="g8-title">
+  <div class="container">
+    <div class="g8-card">
+      <img src="grade8-open-house.png" alt="Title slide: Georges Vanier Secondary School, Grade 8 to 9 Open House 2026">
+      <div>
+        <div class="eyebrow">Grade 8 Families</div>
+        <h2 id="g8-title">Grade 8 to 9 Open House</h2>
+        <p>Missed it, or want to look again? The full presentation from our open house on November 3, 2026 covers programs, course selection, and what to expect in Grade 9.</p>
+        <a class="btn" href="https://docs.google.com/presentation/d/1KLwnec8KQ6hYFeL-qzbqtknhWiPyTCUa/preview" target="_blank" rel="noopener">View the Open House slides</a>
+      </div>
+    </div>
   </div>
 </section>
 
