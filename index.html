@@ -113,22 +113,28 @@
   .event h3{font-size:.95rem;color:var(--maroon);font-weight:700;line-height:1.25;margin:0;}
   .event p{font-size:.82rem;color:var(--muted);line-height:1.3;margin:2px 0 0;}
 
-  /* ---------- Grade 8 callout ----------
-     Sits under the events strip. Unlike an event card this does NOT auto-hide: the open
-     house is over, but the deck stays useful to Grade 8 families through course selection. */
-  section.g8{padding:26px 0;background:var(--cream);border-bottom:1px solid #efe6d8;}
-  .g8-card{display:flex;gap:20px;align-items:center;background:var(--white);border:1px solid #efe6d8;
-    border-left:4px solid var(--gold);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;}
-  .g8-card img{width:230px;flex-shrink:0;border-radius:8px;border:1px solid #efe6d8;}
-  .g8-card .eyebrow{margin-bottom:2px;}
-  .g8-card h2{font-size:1.25rem;color:var(--maroon);font-weight:700;margin:0 0 4px;line-height:1.25;}
-  .g8-card p{font-size:.95rem;color:var(--muted);margin:0 0 12px;}
-  .g8-card .btn{padding:10px 20px;font-size:.92rem;background:var(--maroon);color:var(--white);}
-  .g8-card .btn:hover{background:var(--maroon-light);text-decoration:none;}
-  @media(max-width:600px){
-    .g8-card{flex-direction:column;align-items:flex-start;gap:14px;}
-    .g8-card img{width:100%;}
-  }
+  /* ---------- Session slide decks ----------
+     Decks from sessions that have ALREADY happened. Deliberately separate from the events
+     strip: strip cards auto-hide once their date passes, but these stay useful afterwards.
+     Nothing here expires on its own — prune cards by hand when they stop being relevant. */
+  section.decks{padding:30px 0 34px;background:var(--cream);border-bottom:1px solid #efe6d8;}
+  .decks .section-head{margin-bottom:20px;}
+  .decks .section-head h2{font-size:1.5rem;margin:6px 0 0;}
+  .deck-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  .deck-card{display:flex;flex-direction:column;background:var(--white);border:1px solid #efe6d8;
+    border-top:4px solid var(--gold);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+  /* Fixed 16:9 box + contain: decks come in different shapes (4:3, 16:9), and without this
+     the cards' titles sit at different heights. contain (not cover) so no slide gets cropped. */
+  .deck-card img{width:100%;display:block;aspect-ratio:16/9;object-fit:contain;
+    border-bottom:1px solid #efe6d8;background:var(--white);}
+  .deck-body{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1;}
+  .deck-card h3{font-size:1.1rem;color:var(--maroon);font-weight:700;margin:4px 0 2px;line-height:1.3;}
+  .deck-date{font-size:.85rem;color:var(--gold);font-weight:600;}
+  .deck-card p{font-size:.92rem;color:var(--muted);margin:6px 0 14px;}
+  .deck-card .btn{margin-top:auto;align-self:flex-start;padding:10px 20px;font-size:.92rem;
+    background:var(--maroon);color:var(--white);}
+  .deck-card .btn:hover{background:var(--maroon-light);text-decoration:none;}
+  @media(max-width:700px){ .deck-grid{grid-template-columns:1fr;} }
 
   /* ---------- Counsellor cards ---------- */
   .grid{display:grid;gap:24px;}
@@ -298,23 +304,44 @@
   </div>
 </section>
 
-<!-- ============ GRADE 8 OPEN HOUSE ============
-     The open house itself was Nov. 3, 2026 and is past, so this is NOT an events-strip card
-     (those auto-hide). The deck stays up for Grade 8 families through course selection.
-     Slide image is a copy of slide 1 committed to the repo (grade8-open-house.png) rather than
-     hotlinked from Google, so it can't rate-limit or change under us. To refresh it:
-     curl -sL "https://drive.google.com/thumbnail?id=<FILE_ID>&sz=w640" -o grade8-open-house.png
-     Remove this whole section once it is no longer relevant (roughly after Grade 9 selection). -->
-<section class="g8" aria-labelledby="g8-title">
+<!-- ============ SESSION SLIDE DECKS ============
+     DECKS: slides from sessions that have already happened. NOT events-strip cards — strip
+     cards auto-hide the day after their date, and these need to stay up afterwards.
+     Nothing here expires automatically: delete a .deck-card by hand when it stops being useful.
+     To add one: copy a card, set the image, title, date, blurb and /preview link.
+     Slide images are COPIES committed to this repo, not hotlinks to drive.google.com/thumbnail
+     (which can rate-limit or change format). Fetch or refresh one with:
+       curl -sL "https://drive.google.com/thumbnail?id=<FILE_ID>&sz=w640" -o <name>.png
+     Deck links use /preview (clean read-only view) and must have NO ouid= parameter — that is
+     a personal Google account id and must never be published. -->
+<section class="decks" aria-labelledby="decks-title">
   <div class="container">
-    <div class="g8-card">
-      <img src="grade8-open-house.png" alt="Title slide: Georges Vanier Secondary School, Grade 8 to 9 Open House 2026">
-      <div>
-        <div class="eyebrow">Grade 8 Families</div>
-        <h2 id="g8-title">Grade 8 to 9 Open House</h2>
-        <p>Missed it, or want to look again? The full presentation from our open house on November 3, 2026 covers programs, course selection, and what to expect in Grade 9.</p>
-        <a class="btn" href="https://docs.google.com/presentation/d/1KLwnec8KQ6hYFeL-qzbqtknhWiPyTCUa/preview" target="_blank" rel="noopener">View the Open House slides</a>
+    <div class="section-head">
+      <div class="eyebrow">Catch Up</div>
+      <h2 id="decks-title">Slides From Our Sessions</h2>
+    </div>
+    <div class="deck-grid">
+
+      <div class="deck-card">
+        <img src="grade8-open-house.png" alt="Title slide: Georges Vanier Secondary School, Grade 8 to 9 Open House 2026">
+        <div class="deck-body">
+          <div class="deck-date">November 3, 2026</div>
+          <h3>Grade 8 to 9 Open House</h3>
+          <p>For Grade 8 students and families &mdash; programs, course selection, and what to expect in Grade 9.</p>
+          <a class="btn" href="https://docs.google.com/presentation/d/1KLwnec8KQ6hYFeL-qzbqtknhWiPyTCUa/preview" target="_blank" rel="noopener">View the slides</a>
+        </div>
       </div>
+
+      <div class="deck-card">
+        <img src="postsec-applications.png" alt="Title slide: Georges Vanier SS, Post Secondary Applications 2026-2027">
+        <div class="deck-body">
+          <div class="deck-date">October 15, 2026</div>
+          <h3>Post-Secondary Applications</h3>
+          <p>Applying to university, college, or an apprenticeship for 2026&ndash;2027 &mdash; the full session from the Guidance team.</p>
+          <a class="btn" href="https://docs.google.com/presentation/d/1cOjp9Ya1a3z7k56fQWqvGIiuTkA_wUbM4tFVuYmoTkI/preview" target="_blank" rel="noopener">View the slides</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
