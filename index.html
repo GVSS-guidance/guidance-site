@@ -113,6 +113,42 @@
   .event h3{font-size:.95rem;color:var(--maroon);font-weight:700;line-height:1.25;margin:0;}
   .event p{font-size:.82rem;color:var(--muted);line-height:1.3;margin:2px 0 0;}
 
+  /* ---------- Wellness resource extras ---------- */
+  .filenote{color:var(--muted);font-style:italic;}
+  /* Thumbnail waffle (newcomer graphics). 3-up, 2-up on narrow screens. */
+  .waffle{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .waffle-item{display:block;border:1px solid #efe6d8;border-radius:8px;overflow:hidden;
+    background:var(--white);line-height:0;transition:transform .15s,box-shadow .2s;}
+  .waffle-item:hover,.waffle-item:focus-visible{transform:translateY(-2px);
+    box-shadow:0 6px 16px rgba(78,22,30,.2);outline:2px solid var(--gold);outline-offset:1px;}
+  .waffle-item img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;}
+  @media(max-width:480px){ .waffle{grid-template-columns:repeat(2,1fr);} }
+
+  /* Video card — links out to YouTube rather than embedding, so no third-party
+     tracking or nested iframe inside the Evoq frame. */
+  .vidcard{display:flex;gap:12px;align-items:center;background:var(--white);border:1px solid #efe6d8;
+    border-radius:10px;padding:8px;margin:0 0 10px;text-decoration:none;}
+  .vidcard:hover{box-shadow:0 6px 16px rgba(78,22,30,.15);text-decoration:none;}
+  .vidthumb{position:relative;flex-shrink:0;width:124px;line-height:0;}
+  .vidthumb img{width:100%;border-radius:6px;aspect-ratio:16/9;object-fit:cover;}
+  .vidplay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:1.5rem;text-shadow:0 2px 8px rgba(0,0,0,.6);}
+  .vidtext{font-size:.88rem;line-height:1.35;}
+  .vidtext b{display:block;color:var(--maroon);margin-bottom:2px;}
+  .vidtext span{color:var(--muted);font-size:.82rem;}
+
+  /* Lightbox for the waffle. Hidden until JS opens it; without JS the thumbnails
+     stay plain links to the full-size image, so nothing breaks. */
+  .lbox{position:fixed;inset:0;z-index:999;background:rgba(32,14,18,.92);display:flex;
+    align-items:center;justify-content:center;padding:24px;}
+  .lbox img{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.5);}
+  .lbox button{position:absolute;background:rgba(255,255,255,.14);color:#fff;border:0;
+    width:46px;height:46px;border-radius:50%;font-size:1.4rem;cursor:pointer;line-height:1;}
+  .lbox button:hover{background:rgba(255,255,255,.3);}
+  .lbox .lb-close{top:16px;right:16px;}
+  .lbox .lb-prev{left:12px;} .lbox .lb-next{right:12px;}
+  .lb-count{position:absolute;bottom:16px;left:0;right:0;text-align:center;color:#f3e9da;font-size:.85rem;}
+
   /* ---------- Session slide decks ----------
      Decks from sessions that have ALREADY happened. Deliberately separate from the events
      strip: strip cards auto-hide once their date passes, but these stay useful afterwards.
@@ -615,7 +651,47 @@
       <div class="res">
         <h3><span class="ico">🌱</span> Wellness Resources</h3>
         <ul>
-          <li><a href="#">Stress &amp; time management tips [link]</a></li>
+          <li><a href="https://smho-smso.ca/wp-content/uploads/2020/03/Self-Care-101.pdf" target="_blank" rel="noopener">Self-Care 101 (PDF)</a> &mdash; School Mental Health Ontario &middot; <span class="filenote">large file, 8.6&nbsp;MB</span></li>
+          <li><a href="https://cmha.ca/brochure/stress/" target="_blank" rel="noopener">Understanding stress</a> &mdash; Canadian Mental Health Association brochure</li>
+          <li>
+            <!-- NEWCOMER-GRAPHICS: six School Mental Health Ontario graphics, copies committed to
+                 this repo as newcomer-1..6.webp. No official SMHO page for this carousel was found
+                 (2026-11-07), so they are hosted here; if SMHO publishes a page for it, link that
+                 instead. Images are lazy-loaded and sit inside a closed <details>, so they cost
+                 nothing until opened. Clicking one opens the lightbox (see the script at the
+                 bottom); with JS off each thumbnail is still a plain link to the full image. -->
+            <details>
+              <summary>Building a supportive network (newcomer students)</summary>
+              <div class="exp-body">
+                <p class="exp-note">Ten strategies for newcomer students, by newcomer students. Tap any card to enlarge it.</p>
+                <div class="waffle">
+                  <a class="waffle-item" href="newcomer-1.webp"><img src="newcomer-1.webp" loading="lazy" alt="Building a supportive network: strategies for newcomer students, by newcomer students"></a>
+                  <a class="waffle-item" href="newcomer-2.webp"><img src="newcomer-2.webp" loading="lazy" alt="1. Join clubs and activities. 2. Attend school events."></a>
+                  <a class="waffle-item" href="newcomer-3.webp"><img src="newcomer-3.webp" loading="lazy" alt="3. Be open and approachable. 4. Start conversations."></a>
+                  <a class="waffle-item" href="newcomer-4.webp"><img src="newcomer-4.webp" loading="lazy" alt="5. Ask for help. 6. Introduce yourself."></a>
+                  <a class="waffle-item" href="newcomer-5.webp"><img src="newcomer-5.webp" loading="lazy" alt="7. Join study groups. 8. Use social media and school platforms."></a>
+                  <a class="waffle-item" href="newcomer-6.webp"><img src="newcomer-6.webp" loading="lazy" alt="9. Volunteer for school projects. 10. Find common interests."></a>
+                </div>
+                <p class="exp-note" style="margin:10px 0 0;">Created by <a href="https://smho-smso.ca/" target="_blank" rel="noopener">School Mental Health Ontario</a>.</p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>For parents &amp; caregivers: stress &amp; anxiety</summary>
+              <div class="exp-body">
+                <p class="exp-note">Resources written for families, from School Mental Health Ontario.</p>
+                <a class="vidcard" href="https://youtu.be/xfX0Un90Z6I" target="_blank" rel="noopener">
+                  <span class="vidthumb"><img src="yt-stress-anxiety.jpg" loading="lazy" alt=""><span class="vidplay" aria-hidden="true">&#9654;</span></span>
+                  <span class="vidtext"><b>Watch: Supporting your child with school-related stress and anxiety</b><span>Video &middot; School Mental Health Ontario &middot; opens on YouTube</span></span>
+                </a>
+                <ul class="dates">
+                  <li><a href="https://smho-smso.ca/online-resources/supporting-your-child-with-school-related-stress-and-anxiety/" target="_blank" rel="noopener">Supporting your child with school-related stress and anxiety</a> &mdash; the handout that goes with the video (also in 11 other languages)</li>
+                  <li><a href="https://smho-smso.ca/online-resources/helping-your-child-understand-and-manage-stress/" target="_blank" rel="noopener">Helping your child understand and manage stress</a> &mdash; what stress looks like, and how to help</li>
+                </ul>
+              </div>
+            </details>
+          </li>
           <li>
             <details>
               <summary>Community mental health services</summary>
@@ -633,8 +709,6 @@
               </div>
             </details>
           </li>
-          <li><a href="#">Mindfulness &amp; self-care tools [link]</a></li>
-          <li><a href="#">Support groups &amp; clubs [link]</a></li>
         </ul>
       </div>
 
@@ -684,6 +758,57 @@
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
+  // Lightbox for the newcomer-graphics waffle. Progressive enhancement: each thumbnail is a
+  // plain <a href="full image">, so with JS off clicking still opens the image.
+  (function(){
+    var links = [].slice.call(document.querySelectorAll('.waffle-item'));
+    if (!links.length) return;
+    var box, img, count, idx = 0, lastFocus = null;
+
+    function show(i){
+      idx = (i + links.length) % links.length;
+      img.src = links[idx].getAttribute('href');
+      img.alt = links[idx].querySelector('img').alt;
+      count.textContent = (idx + 1) + ' of ' + links.length;
+    }
+    function close(){
+      box.remove(); box = null;
+      document.removeEventListener('keydown', onKey);
+      if (lastFocus) lastFocus.focus();
+    }
+    function onKey(e){
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight') show(idx + 1);
+      else if (e.key === 'ArrowLeft') show(idx - 1);
+    }
+    function open(i, trigger){
+      lastFocus = trigger;
+      box = document.createElement('div');
+      box.className = 'lbox';
+      box.setAttribute('role', 'dialog');
+      box.setAttribute('aria-modal', 'true');
+      box.setAttribute('aria-label', 'Image viewer');
+      box.innerHTML = '<img alt="">' +
+        '<button class="lb-close" aria-label="Close">&times;</button>' +
+        '<button class="lb-prev" aria-label="Previous image">&#8249;</button>' +
+        '<button class="lb-next" aria-label="Next image">&#8250;</button>' +
+        '<div class="lb-count"></div>';
+      img = box.querySelector('img');
+      count = box.querySelector('.lb-count');
+      box.querySelector('.lb-close').addEventListener('click', close);
+      box.querySelector('.lb-prev').addEventListener('click', function(e){ e.stopPropagation(); show(idx - 1); });
+      box.querySelector('.lb-next').addEventListener('click', function(e){ e.stopPropagation(); show(idx + 1); });
+      box.addEventListener('click', function(e){ if (e.target === box || e.target === img) close(); });
+      document.body.appendChild(box);
+      document.addEventListener('keydown', onKey);
+      show(i);
+      box.querySelector('.lb-close').focus();
+    }
+    links.forEach(function(a, i){
+      a.addEventListener('click', function(e){ e.preventDefault(); open(i, a); });
+    });
+  })();
+
   // Hide events whose date has passed (visible through the end of the event day); hide the strip if none remain.
   (function(){
     var now = new Date(), left = 0;
