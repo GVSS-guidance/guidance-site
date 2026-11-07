@@ -149,6 +149,14 @@
   .lbox .lb-prev{left:12px;} .lbox .lb-next{right:12px;}
   .lb-count{position:absolute;bottom:16px;left:0;right:0;text-align:center;color:#f3e9da;font-size:.85rem;}
 
+  /* In-page video player (same modal shell as the image lightbox). */
+  .lbox .lb-player{width:min(100%,900px);display:flex;flex-direction:column;gap:10px;}
+  .lbox .lb-frame{position:relative;width:100%;aspect-ratio:16/9;max-height:72vh;
+    background:#000;border-radius:10px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.5);}
+  .lbox .lb-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .lbox .lb-alt{text-align:center;font-size:.85rem;color:#f3e9da;}
+  .lbox .lb-alt a{color:var(--gold-light);text-decoration:underline;}
+
   /* ---------- Session slide decks ----------
      Decks from sessions that have ALREADY happened. Deliberately separate from the events
      strip: strip cards auto-hide once their date passes, but these stay useful afterwards.
@@ -681,9 +689,12 @@
               <summary>For parents &amp; caregivers: stress &amp; anxiety</summary>
               <div class="exp-body">
                 <p class="exp-note">Resources written for families, from School Mental Health Ontario.</p>
-                <a class="vidcard" href="https://youtu.be/xfX0Un90Z6I" target="_blank" rel="noopener">
+                <!-- VIDEO: plays in a modal on this page. data-yt holds the YouTube id; the href is
+                     the no-JS fallback (and the "Watch on YouTube" link inside the modal). Nothing
+                     from Google loads until the card is clicked — see the player script below. -->
+                <a class="vidcard" href="https://youtu.be/xfX0Un90Z6I" data-yt="xfX0Un90Z6I" target="_blank" rel="noopener">
                   <span class="vidthumb"><img src="yt-stress-anxiety.jpg" loading="lazy" alt=""><span class="vidplay" aria-hidden="true">&#9654;</span></span>
-                  <span class="vidtext"><b>Watch: Supporting your child with school-related stress and anxiety</b><span>Video &middot; School Mental Health Ontario &middot; opens on YouTube</span></span>
+                  <span class="vidtext"><b>Watch: Supporting your child with school-related stress and anxiety</b><span>Video &middot; School Mental Health Ontario</span></span>
                 </a>
                 <ul class="dates">
                   <li><a href="https://smho-smso.ca/online-resources/supporting-your-child-with-school-related-stress-and-anxiety/" target="_blank" rel="noopener">Supporting your child with school-related stress and anxiety</a> &mdash; the handout that goes with the video (also in 11 other languages)</li>
@@ -806,6 +817,49 @@
     }
     links.forEach(function(a, i){
       a.addEventListener('click', function(e){ e.preventDefault(); open(i, a); });
+    });
+  })();
+
+  // In-page player for the video card. Progressive enhancement again: the card is a real link
+  // to YouTube, and this intercepts the click. Uses youtube-nocookie and loads NOTHING from
+  // Google until the card is actually clicked, so a visitor who never plays it is not tracked.
+  (function(){
+    var card = document.querySelector('.vidcard[data-yt]');
+    if (!card) return;
+    var box = null, lastFocus = null;
+
+    function close(){
+      if (!box) return;
+      box.remove(); box = null;           // removing the iframe stops playback
+      document.removeEventListener('keydown', onKey);
+      if (lastFocus) lastFocus.focus();
+    }
+    function onKey(e){ if (e.key === 'Escape') close(); }
+
+    card.addEventListener('click', function(e){
+      e.preventDefault();
+      lastFocus = card;
+      var id = card.getAttribute('data-yt');
+      var href = card.getAttribute('href');
+      box = document.createElement('div');
+      box.className = 'lbox';
+      box.setAttribute('role', 'dialog');
+      box.setAttribute('aria-modal', 'true');
+      box.setAttribute('aria-label', 'Video player');
+      box.innerHTML =
+        '<div class="lb-player">' +
+          '<div class="lb-frame"><iframe src="https://www.youtube-nocookie.com/embed/' + id +
+            '?autoplay=1&rel=0" title="Supporting your child with school-related stress and anxiety" ' +
+            'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+            'allowfullscreen></iframe></div>' +
+          '<p class="lb-alt">Trouble playing? <a href="' + href + '" target="_blank" rel="noopener">Watch on YouTube</a></p>' +
+        '</div>' +
+        '<button class="lb-close" aria-label="Close video">&times;</button>';
+      box.querySelector('.lb-close').addEventListener('click', close);
+      box.addEventListener('click', function(ev){ if (ev.target === box) close(); });
+      document.body.appendChild(box);
+      document.addEventListener('keydown', onKey);
+      box.querySelector('.lb-close').focus();
     });
   })();
 
