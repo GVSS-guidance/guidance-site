@@ -22,7 +22,7 @@
   html{scroll-behavior:smooth;}
   /* Keep anchor jumps clear of the sticky header (it wraps to two lines at mid widths). */
   section[id]{scroll-margin-top:120px;}
-  @media(max-width:600px){ section[id]{scroll-margin-top:64px;} }
+  @media(max-width:600px){ section[id]{scroll-margin-top:90px;} }  /* collapsed mobile header is 75px */
   body{
     font-family:'Segoe UI',Helvetica,Arial,sans-serif;
     color:var(--ink);
@@ -54,12 +54,23 @@
   .brand .logo{height:46px;width:auto;display:block;background:#fff;border-radius:10px;padding:4px;flex-shrink:0;}
   .brand b,.brand strong{font-size:1.05rem;line-height:1.2;display:block;}
   .brand span{font-size:.78rem;color:var(--gold-light);letter-spacing:.5px;}
-  .nav-links{display:flex;gap:6px;list-style:none;flex-wrap:wrap;}
+  /* Nav items are icon-above-label tiles. Stacked rather than icon-beside-label because
+     five horizontal icon+label pairs do not fit beside the brand at the Evoq frame width.
+     The header is sticky inside an 800px frame, so keep it compact — every pixel here is
+     taken off what the student can see while scrolling. */
+  .nav-links{display:flex;gap:4px;list-style:none;flex-wrap:wrap;}
   .nav-links a{
-    color:var(--white);font-size:.92rem;font-weight:500;
-    padding:8px 12px;border-radius:8px;transition:background .2s;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    color:var(--white);font-size:.79rem;font-weight:600;letter-spacing:.2px;
+    padding:8px 10px 7px;border-radius:10px;min-width:82px;text-align:center;
+    border:1px solid transparent;transition:background .2s,border-color .2s,transform .15s;
   }
-  .nav-links a:hover{background:var(--maroon-light);text-decoration:none;}
+  .nav-links a:hover,.nav-links a:focus-visible{
+    background:var(--maroon-light);border-color:var(--gold);transform:translateY(-1px);
+    text-decoration:none;
+  }
+  .nav-ico{width:27px;height:27px;color:var(--gold-light);flex-shrink:0;}
+  .nav-links a:hover .nav-ico,.nav-links a:focus-visible .nav-ico{color:var(--gold);}
   .menu-toggle{display:none;background:none;border:none;color:var(--white);
     font-size:1.6rem;cursor:pointer;}
 
@@ -278,11 +289,9 @@
   @media(max-width:600px){
     .grid-3,.grid-2{grid-template-columns:1fr;}
     .menu-toggle{display:block;}
-    .nav-links{
-      display:none;width:100%;flex-direction:column;gap:2px;
-      padding:10px 0 4px;
-    }
-    .nav-links.open{display:flex;}
+    .nav-links{display:none;width:100%;gap:6px;padding:10px 0 4px;}
+    .nav-links.open{display:grid;grid-template-columns:repeat(3,1fr);}
+    .nav-links a{min-width:0;background:rgba(255,255,255,.08);}
     .nav{flex-wrap:wrap;}
     .hero{padding:54px 0 60px;}
   }
@@ -301,11 +310,11 @@
     </div>
     <button class="menu-toggle" aria-label="Menu" onclick="document.getElementById('navlinks').classList.toggle('open')">&#9776;</button>
     <ul class="nav-links" id="navlinks">
-      <li><a href="#counsellors">Our Counsellors</a></li>
-      <li><a href="#academic">Academic Planning</a></li>
-      <li><a href="#postsec">Post-Secondary</a></li>
-      <li><a href="#wellness">Wellness</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#counsellors"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1"/><circle cx="9" cy="7" r="3.2"/><path d="M22 19v-1a4 4 0 0 0-3-3.9"/><path d="M16.5 4.2a4 4 0 0 1 0 5.6"/></svg>Our Counsellors</a></li>
+      <li><a href="#academic"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 6.5C10.5 5 8 4.2 4 4.2V18c4 0 6.5.8 8 2.3 1.5-1.5 4-2.3 8-2.3V4.2c-4 0-6.5.8-8 2.3z"/><path d="M12 6.5v13.8"/></svg>Academic Planning</a></li>
+      <li><a href="#postsec"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 8.5 12 4l10 4.5-10 4.5z"/><path d="M6 10.8v4.4c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.4"/><path d="M22 8.5v5"/></svg>Post-Secondary</a></li>
+      <li><a href="#wellness"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.4 5.6a5 5 0 0 0-7.1 0L12 6.9l-1.3-1.3a5 5 0 1 0-7.1 7.1l8.4 8.4 8.4-8.4a5 5 0 0 0 0-7.1z"/></svg>Wellness</a></li>
+      <li><a href="#contact"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.5" y="5" width="19" height="14" rx="2.2"/><path d="m3 7 9 6 9-6"/></svg>Contact</a></li>
     </ul>
   </nav>
 </header>
